@@ -20,14 +20,14 @@ public class BGLL {
 
 	//excute bgll,stop when there is not emerge
 	public void excuteBGLL(String path) throws SQLException, IOException{
-		//storage the result ´æ´¢BGLL»®·Ö½á¹û
+		//storage the result 
 		Map<Integer, List<Community>> commnityMap = new HashMap<>();;
 		Graph graph = new Graph();
-		//intial the network³õÊ¼ÍøÂç
+		//intial the network 
 		Map<Integer, Node> nodeMap = graph.InitialGraph();
-		//ÍøÂç×ÜÈ¨ÖØ
+		//the total weight of network 
 		this.M = graph.getM();
-		//±ê¼Ç
+		//flag of if stoping the interation
 		boolean flag = true;
 		int start = nodeMap.size();
 		int pass = 1;
@@ -37,7 +37,7 @@ public class BGLL {
 			int end = comList.size();
 			if(end!=start){
 				commnityMap.put(pass, comList);
-				System.out.println("ÕâÊÇµÚ" + pass + "ÌË»®·Ö£º");
+				System.out.println("this is the" + pass + " 's interationï¼š");
 				printCom(comList);
 				nodeMap = getNewNodeMap(comList);
 				start = end;
@@ -52,14 +52,14 @@ public class BGLL {
 	}
 
 	public void excuteBGLL(String inputPath, String outPath) throws NumberFormatException, IOException{
-		//´æ´¢BGLL»®·Ö½á¹û
+		//storage the result
 		Map<Integer, List<Community>> commnityMap = new HashMap<>();;
-		//³õÊ¼ÍøÂç
+		//intial the network
 		Graph graph = new Graph(inputPath);
 		Map<Integer, Node> nodeMap = graph.getNodeMap();
-		//ÍøÂç×ÜÈ¨ÖØ
+		//the total weight of network 
 		this.M = graph.getM();
-		//±ê¼Ç
+		//flag of if stoping the interation
 		boolean flag = true;
 		int start = nodeMap.size();
 		int pass = 1;
@@ -69,7 +69,7 @@ public class BGLL {
 			int end = comList.size();
 			if(end!=start){
 				commnityMap.put(pass, comList);
-				System.out.println("ÕâÊÇµÚ" + pass + "ÌË»®·Ö£º");
+				System.out.println("this is the" + pass + " 's interationï¼š");
 				printCom(comList);
 				nodeMap = getNewNodeMap(comList);
 				start = end;
@@ -83,19 +83,19 @@ public class BGLL {
 		printCommunity(commnityMap,outPath);
 	}
 
-	//Ö´ĞĞBGLL»®·Ö,Í¨¹ı²ÎÊıpass¿ØÖÆ
+	//excute the bgll ,set the interation times
 	public void excuteBGLL(int pass,String path) throws SQLException, IOException{
-		//´æ´¢BGLL»®·Ö½á¹û
+		//storage the result
 		Map<Integer, List<Community>> commnityMap = new HashMap<>();;
 		Graph graph = new Graph();
-		//³õÊ¼ÍøÂç
+		//intial the network
 		Map<Integer, Node> nodeMap = graph.InitialGraph();
-		//ÍøÂç×ÜÈ¨ÖØ
+		//the total weight of network 
 		this.M = graph.getM();
 		for(int i = 1;i <= pass;i++){
 			List<Community> comList = startBGLL(nodeMap, i);
 			commnityMap.put(i, comList);
-			System.out.println("ÕâÊÇµÚ" + i + "ÌË»®·Ö£º");
+			System.out.println("this is the" + i + " 's interationï¼š");
 			printCom(comList);
 			nodeMap = getNewNodeMap(comList);
 		}
@@ -104,12 +104,11 @@ public class BGLL {
 
 	}
 
-	//phase1£¬½«Ã¿¸ö½Úµã¿´×öÊÇÒ»¸öÉçÇø£¬°Ñ½Úµãi¼ÓÈëµ½Ä£¿é¶ÈÔöÒæ×î´óµÄÁÚ¾Ó½ÚµãjµÄÉçÇø£¬Èç¹ûÄ£¿é¶ÈÔöÒæÊÇ¸ºµÄ£¬±£³Ö²»¶¯
+	//phase1ï¼Œlet every node be a community and add the node to the  community which get the maximum modularity
 	private List<Community> startBGLL(Map<Integer, Node> nodeMap,int pass){
-		//µü´úÖÕÖ¹±ê¼Ç£¬Èç¹ûÃ»ÓĞ½ÚµãÒÆ¶¯£¬flag=0 ,µü´ú½áÊø
+		//flag of stop interation,if there has no node remove,stop the interation
 		boolean flag = false;
 		List<Community> comList = new LinkedList<>();
-		//³õÊ¼»¯ÉçÇøÁ´±í
 		int comid = 0;
 		for(Node node:nodeMap.values()){
 			Community community = new Community();
@@ -121,21 +120,17 @@ public class BGLL {
 			comList.add(community);
 			comid++;
 		}
-		//±éÀúÉçÇøÖĞÃ¿¸ö½Úµã£¬¼ÆËãÆäÔöÒæ×î´óÁÚ¾ÓÉçÇø£¬ÔöÒæÎª¸ºÊ²Ã´¶¼²»×ö,µ±Ã»ÓĞ½ÚµãÒÆ¶¯µü´ú½áÊø
 		while(flag == false){
-			//»ñÈ¡³õÊ¼ÉçÇøMap
 			Map<Integer, Integer> validateMap = getValidation(comList);
 			for(Community com:comList){
 				List<Node> nodeInCom = com.getNodeList();
-				//½ÚµãiÉçÇøid
+				//community id of node
 				int cid = com.getId();
-				//¼ÇÂ¼ÒªÉ¾³ıµÄ½Úµã£¬½Úµã±¾ÉíÉçÇøid£¬Òª¼ÓÈëµÄÉçÇøid
+				//record the delete node,node's id,the community which to remove
 				Iterator<Node> it1 = nodeInCom.iterator();
 				while(it1.hasNext()){
 					Node node = it1.next();
-					//½ÚµãjµÄÉçÇøid
 					int maxNeighbor = maxQNeighbor(node, comList);
-					//ÓĞÄ£¿é¶ÈÔöÒæ×î´óµÄÁÚ¾Ó½ÚµãÇÒËùÊôÉçÇøÏàÒì¡£½Úµãi¼ÓÈë½ÚµãjËùÔÚÉçÇø
 					if(maxNeighbor > 0 && maxNeighbor!=cid){
 						//System.out.println(node.getNodeId() + " move from " + cid + " to " + maxNeighbor);
 						List<Node> targetList = comList.get(maxNeighbor).getNodeList();
@@ -146,7 +141,6 @@ public class BGLL {
 					}
 				}
 			}
-			//¼ÇÂ¼½ÚµãÊıÁ¿ÎªÁãµÄÉçÇøÏÂ±ê£¬½«ÆäÉ¾³ı
 			int newId = 0;
 			for(Iterator<Community> it = comList.iterator();it.hasNext();){
 				Community com = it.next();
@@ -156,13 +150,12 @@ public class BGLL {
 					com.setId(newId++);
 				}
 			}
-			//ÊÇ·ñÓĞ½ÚµãÒÆ¶¯
 			flag = judge(validateMap, comList);
 		}
 
 		return comList;
 	}
-	//¼ÆËã½ÚµãiÁÚ¾ÓÖĞ×î´óÔöÒæÄ£¿é¶ÈµÄÁÚ¾ÓËùÊôÉçÍÅ
+	//the community id of the node's neighbor node which get the maximum modularity
 	private int maxQNeighbor(Node node,List<Community> comList){
 		int maxNeighbor = -1;
 		double maxQ = Double.MIN_VALUE;
@@ -188,7 +181,7 @@ public class BGLL {
 		}
 		return maxNeighbor;
 	}
-	//¼ÆËã½ÚµãiËùÔÚÉçÇø
+	//calculate the community id of the node
 	private int nodeCom(int id,List<Community> comList){
 		int comId = -1;
 		for(int i = 0;i < comList.size();i++){
@@ -204,7 +197,7 @@ public class BGLL {
 		return comId;
 	}
 
-	//½«»®·ÖºÃÉçÇø³éÏó³É½Úµã
+	//abstract community to node
 	private Map<Integer, Node> getNewNodeMap(List<Community> comList){
 		Map<Integer, Node> newMap = new HashMap<>();
 		for(Community com:comList){
@@ -233,15 +226,15 @@ public class BGLL {
 		return newMap;
 	}
 
-	//in ¼ÆËãÉçÇøÄÚ²¿±ßÈ¨ÖØÖ®ºÍ
+	//in the sum of the weights of the links inside community C
 	private float calComIn(List<Node> nodeList){
 		float sumIn = 0;
-		//´æ·ÅÉçÇøÄÚ½ÚµãID
+		//å­˜æ”¾ç¤¾åŒºå†…èŠ‚ç‚¹ID
 		List<Integer> idList = new ArrayList<>();
 		for(Node node:nodeList){
 			idList.add(node.getNodeId());
 		}
-		//±éÀúÉçÇøÄÚ½ÚµãµÄ±ß
+		//éå†ç¤¾åŒºå†…èŠ‚ç‚¹çš„è¾¹
 		for(Node node:nodeList){
 			Map<Integer, Float> neighborMap = node.getNeighborMap();
 			for(int nid:neighborMap.keySet()){
@@ -254,7 +247,7 @@ public class BGLL {
 		return sumIn;
 	}
 
-	//tot ËùÓĞÓëÉçÇøCÄÚ²¿½ÚµãÏà¹ØÁªµÄ±ßÈ¨ÖØÖ®ºÍ
+	//tot, the sum of the weights of the links incident to nodes in C
 	private float calComTot(List<Node> nodeList){
 		float sumTot = 0;
 		for(Node node:nodeList){
@@ -266,7 +259,7 @@ public class BGLL {
 		return sumTot;
 	}
 
-	//Ki ½ÚµãiµÄÈ¨ÖØÖ®ºÍ
+	//Ki, the sum of the weights of the links incident to node i
 	private float calNodeWeight(Node node){
 		float Sumweight = 0;
 		Map<Integer, Float> neighborMap = node.getNeighborMap();
@@ -276,10 +269,9 @@ public class BGLL {
 		return Sumweight;
 	}
 
-	//Ki,in ½ÚµãiÓëÉçÇøCµÄÄÚ²¿Á¬±ßÈ¨ÖØÖ®ºÍ
+	//Ki,in, the sum of the weights of the links from i to nodes in C
 	private float calIIn(Node node,List<Node> nodeList){
 		float sumIin = 0;
-		//´æ·ÅÉçÇøÄÚ½ÚµãID
 		List<Integer> idList = new ArrayList<>();
 		for(Node nodeInC:nodeList){
 			idList.add(nodeInC.getNodeId());
@@ -295,7 +287,7 @@ public class BGLL {
 
 	}
 
-	//´òÓ¡ÉçÇø»®·Ö½á¹û
+	//print result
 	private void printCom(List<Community> comList){
 		for(Community com:comList){
 			int comid = com.getId();
@@ -309,7 +301,6 @@ public class BGLL {
 			System.out.println(str);
 		}
 	}
-	//¼ÇÂ¼Ã¿´Î»®·Ö½ÚµãËùÊôÉçÇø
 	private Map<Integer, Integer> getValidation(List<Community> comList){
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		for(Community com:comList){
@@ -322,7 +313,7 @@ public class BGLL {
 		}
 		return map;
 	}
-	//ÅĞ¶ÏÁ½´Î»®·ÖÊÇ·ñÒ»Ñù
+	//judge if two result is the same
 	private boolean judge(Map<Integer, Integer> map,List<Community> comList){
 		boolean flag = true;
 		for(Community com:comList){
@@ -350,7 +341,6 @@ public class BGLL {
 		}
 	}
 
-	//´òÓ¡BGLLÉçÇø»®·Ö½á¹û
 	private void printCommunity(Map<Integer, List<Community>> commnityMap,String path) throws IOException{
 		int pass = commnityMap.size();
 		List<Node> printList = new ArrayList<>();
