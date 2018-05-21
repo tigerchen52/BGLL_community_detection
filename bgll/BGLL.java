@@ -229,12 +229,10 @@ public class BGLL {
 	//in the sum of the weights of the links inside community C
 	private float calComIn(List<Node> nodeList){
 		float sumIn = 0;
-		//存放社区内节点ID
 		List<Integer> idList = new ArrayList<>();
 		for(Node node:nodeList){
 			idList.add(node.getNodeId());
 		}
-		//遍历社区内节点的边
 		for(Node node:nodeList){
 			Map<Integer, Float> neighborMap = node.getNeighborMap();
 			for(int nid:neighborMap.keySet()){
