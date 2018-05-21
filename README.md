@@ -1,5 +1,5 @@
 # BGLL_community_detection
-complex network algortihm&amp; BGLL&amp;community detection
+A java implementation of BGLL algorithm in [Fast unfolding of communities in large networks](https://arxiv.org/pdf/0803.0476.pdf)
 ##DataSet
 ##Example
 ####start the BGLL
