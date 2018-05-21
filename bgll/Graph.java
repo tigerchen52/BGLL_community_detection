@@ -50,7 +50,7 @@ public class Graph {
 			int label2 = rs.getInt(5);
 			sumWeight += weight;
 			
-			//维护nodeA的信息
+			//nodeA
 			if(nodeMap.containsKey(nodeA)){
 				Node node = nodeMap.get(nodeA);
 				node.getNeighborMap().put(nodeB, weight);
@@ -61,7 +61,7 @@ public class Graph {
 				node.getNeighborMap().put(nodeB, weight);
 				nodeMap.put(nodeA, node);
 			}
-			//维护nodeB的信息
+			//nodeB
 			if(nodeMap.containsKey(nodeB)){
 				Node node = nodeMap.get(nodeB);
 				node.getNeighborMap().put(nodeA, weight);
@@ -99,7 +99,7 @@ public class Graph {
 			//int label2 = rs.getInt(5);
 			sumWeight += weight;
 			
-			//维护nodeA的信息
+			//nodeA
 			if(nodeMap.containsKey(nodeA)){
 				Node node = nodeMap.get(nodeA);
 				node.getNeighborMap().put(nodeB, weight);
@@ -110,7 +110,7 @@ public class Graph {
 				node.getNeighborMap().put(nodeB, weight);
 				nodeMap.put(nodeA, node);
 			}
-			//维护nodeB的信息
+			//nodeB
 			if(nodeMap.containsKey(nodeB)){
 				Node node = nodeMap.get(nodeB);
 				node.getNeighborMap().put(nodeA, weight);
@@ -137,7 +137,7 @@ public class Graph {
 			float weight = edge.getWeight();
 			
 			sumWeight += weight;
-			//维护nodeA的信息
+			//nodeA
 			if(nodeMap.containsKey(nodeA)){
 				Node node = nodeMap.get(nodeA);
 				node.getNeighborMap().put(nodeB, weight);
@@ -146,7 +146,7 @@ public class Graph {
 				node.getNeighborMap().put(nodeB, weight);
 				nodeMap.put(nodeA, node);
 			}
-			//维护nodeB的信息
+			//nodeB
 			if(nodeMap.containsKey(nodeB)){
 				Node node = nodeMap.get(nodeB);
 				node.getNeighborMap().put(nodeA, weight);
