@@ -10,7 +10,7 @@ A java implementation of BGLL algorithm in [Fast unfolding of communities in lar
 ``` 
 ### input
 a file like this:
-first is nodeA,second is nodeB,last is weight
+the first column is the id of nodeA,the second column is the id of nodeB,the last column is weight between nodeA and nodeB.The weight can be both integer and float.
 ```
 1,2,14
 2,3,10
