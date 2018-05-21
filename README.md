@@ -30,4 +30,4 @@ the output is the result of Hierarchical Clustering.there shows a faked result s
 7,4,2
 8,4,2
 ```
-As the output show,there are 8 nodes in the network.the first column is the id of nodes,the the second column is the community id of the first clustering,we get 4 community in the first step.The final column is the community id of the last step clustering,the 8 nodes final divided into 4 cluster.
+As the output show,there are 8 nodes in the network.the first column is the id of nodes,the the second column is the community id of the first clustering,we get 4 community in the first step.The final column is the community id of the last step clustering,the 8 nodes final divided into 2 clusters.
