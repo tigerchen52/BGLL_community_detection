@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pers.tiger.dao.DBconnection;
-
 public class Graph {
 	private float M;
 	Map<Integer, Node> nodeMap;
@@ -31,52 +29,52 @@ public class Graph {
 	public void setNodeMap(Map<Integer, Node> nodeMap) {
 		this.nodeMap = nodeMap;
 	}
-	public Map<Integer, Node> InitialGraph() throws SQLException{
-		float sumWeight = 0;
-		Map<Integer, Node> nodeMap = new HashMap<Integer, Node>();
-		String sql = "select b.node1,b.node2,b.weight,a.com_id,c.com_id from karate_nodes as a, "
-				+ "karate_edges as b,karate_nodes as c where b.node1 = a.node and b.node2 = c.node";
-		DBconnection dbc = new DBconnection();
-		Connection conn = dbc.getConnection();
-		Statement st = conn.createStatement();
-		ResultSet rs = st.executeQuery(sql);
-		while(rs.next()){
-			int nodeA = rs.getInt(1);
-			int nodeB = rs.getInt(2);
-			float weight = rs.getFloat(3);
-//			String hostName1 = rs.getString(4);
-//			String hostName2 = rs.getString(5);
-			int lable1 = rs.getInt(4);
-			int label2 = rs.getInt(5);
-			sumWeight += weight;
+// 	public Map<Integer, Node> InitialGraph() throws SQLException{
+// 		float sumWeight = 0;
+// 		Map<Integer, Node> nodeMap = new HashMap<Integer, Node>();
+// 		String sql = "select b.node1,b.node2,b.weight,a.com_id,c.com_id from karate_nodes as a, "
+// 				+ "karate_edges as b,karate_nodes as c where b.node1 = a.node and b.node2 = c.node";
+// 		DBconnection dbc = new DBconnection();
+// 		Connection conn = dbc.getConnection();
+// 		Statement st = conn.createStatement();
+// 		ResultSet rs = st.executeQuery(sql);
+// 		while(rs.next()){
+// 			int nodeA = rs.getInt(1);
+// 			int nodeB = rs.getInt(2);
+// 			float weight = rs.getFloat(3);
+// //			String hostName1 = rs.getString(4);
+// //			String hostName2 = rs.getString(5);
+// 			int lable1 = rs.getInt(4);
+// 			int label2 = rs.getInt(5);
+// 			sumWeight += weight;
 			
-			//nodeA
-			if(nodeMap.containsKey(nodeA)){
-				Node node = nodeMap.get(nodeA);
-				node.getNeighborMap().put(nodeB, weight);
-			}else{
-				Node node = new Node(nodeA);
-//				node.setHostName(hostName1);
-				node.setLabel(lable1);
-				node.getNeighborMap().put(nodeB, weight);
-				nodeMap.put(nodeA, node);
-			}
-			//nodeB
-			if(nodeMap.containsKey(nodeB)){
-				Node node = nodeMap.get(nodeB);
-				node.getNeighborMap().put(nodeA, weight);
-			}else{
-				Node node = new Node(nodeB);
-//				node.setHostName(hostName2);
-				node.setLabel(label2);
-				node.getNeighborMap().put(nodeA, weight);
-				nodeMap.put(nodeB, node);
-			}
-		}
-		dbc.closeConnection(rs, st, conn);
-		setM(2*sumWeight);
-		return nodeMap;
-	}
+// 			//nodeA
+// 			if(nodeMap.containsKey(nodeA)){
+// 				Node node = nodeMap.get(nodeA);
+// 				node.getNeighborMap().put(nodeB, weight);
+// 			}else{
+// 				Node node = new Node(nodeA);
+// //				node.setHostName(hostName1);
+// 				node.setLabel(lable1);
+// 				node.getNeighborMap().put(nodeB, weight);
+// 				nodeMap.put(nodeA, node);
+// 			}
+// 			//nodeB
+// 			if(nodeMap.containsKey(nodeB)){
+// 				Node node = nodeMap.get(nodeB);
+// 				node.getNeighborMap().put(nodeA, weight);
+// 			}else{
+// 				Node node = new Node(nodeB);
+// //				node.setHostName(hostName2);
+// 				node.setLabel(label2);
+// 				node.getNeighborMap().put(nodeA, weight);
+// 				nodeMap.put(nodeB, node);
+// 			}
+// 		}
+// 		dbc.closeConnection(rs, st, conn);
+// 		setM(2*sumWeight);
+// 		return nodeMap;
+// 	}
 	public Map<Integer, Node> InitialGraph(String inputPath) throws NumberFormatException, IOException{
 		float sumWeight = 0;
 		Map<Integer, Node> nodeMap = new HashMap<Integer, Node>();
